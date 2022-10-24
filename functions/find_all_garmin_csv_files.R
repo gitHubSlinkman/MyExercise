@@ -20,7 +20,7 @@ require(tidyverse)                          # I live in the tidyverse.
 # Define function
 ################################################################################
 
-find_all_files <- 
+find_all_garmin_csv_files <- 
     function( directory )
      {
        files <- 
