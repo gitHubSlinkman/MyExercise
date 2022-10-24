@@ -20,7 +20,6 @@ activities.
 require( tidyverse )                   # I live in the tidyverse.
 require( here )                        # To determine project file location.
 require( lubridate )                   # For date manipulation.
-require(flextable)                     # For table display.
 #
 ```
 
