@@ -2,4 +2,4 @@
 
 fix_column_name <-
   function( variable )
-    {  str_replace( tolower(variable), " ","_" )}
+    {  str_replace_all( tolower(variable), " ","_" )}

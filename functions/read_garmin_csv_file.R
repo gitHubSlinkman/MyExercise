@@ -12,11 +12,24 @@ read_garmin_csv_file <-
   function( file_path )
   { 
     Activities <-                          # Read file
-      read_csv( file_path )
+      read_csv( file_path,
+                na = "--")
     
     Activities <-                          # Fix column names.
       rename_with( Activities,
                    fix_column_name )
+    
+    ############################################################################
+    # The data vararible are not al;was present in all the Garemin data files.
+    # Therefore we must remove variables that does not exist in all if the data
+    # files.
+    ############################################################################
+    
+    Activities <-                          # Remove columns that not available
+      Activities %>%                       # in all Garmin data files.
+      select( 
+        activity_type:avg_stride_length,
+        min_temp:max_elevation )
     
     ############################################################################
     # Make Cycling as my favorite activity and change "Cycling to "Triking."
