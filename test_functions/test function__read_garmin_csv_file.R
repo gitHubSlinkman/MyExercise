@@ -31,10 +31,13 @@ files <-                                    # Find the files to be read.
     data_directory )
 
 nf<- length(files)                          # Determine number of files
+                                            # Read and display each file.
+Activities <-
+  read_garmin_csv_file( files[nf]) 
+    
+Activities                                  # Display variable names. 
 
-for( i in 1:nf ){                           # Read and display each file.
-  read_garmin_csv_file( files[i])
-}
+
 
 
 
