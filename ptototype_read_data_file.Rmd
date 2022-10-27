@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Protype
+# Prototype
 
 This document is used to develop a new analysis of the my walks and riding
 activities.
@@ -30,7 +30,7 @@ require( lubridate )                   # For date manipulation.
 #### Function
 
 ```{r}
-find_all_files <- 
+find_all_csv_files <- 
     function( directory )
      {
        files <- 

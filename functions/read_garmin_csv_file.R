@@ -17,7 +17,8 @@ read_garmin_csv_file <-
     
     Activities <-                          # Fix column names.
       rename_with( Activities,
-                   fix_column_name )
+                   fix_column_name ) %>% 
+      rename( date_time = date )
     
     ############################################################################
     # The data vararible are not al;was present in all the Garemin data files.
