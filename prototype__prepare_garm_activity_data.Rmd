@@ -1,0 +1,60 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+## Load packages and required functions
+
+```{r}
+require( here )                        # Used to determine project location.
+require( tidyverse )                   # I live in the tidyverse.
+require( lubridate )                   # For date-time processing.
+
+source("D:/R-Projects/MyExercise/functions/find_all_garmin_csv_files.R")
+source("D:/R-Projects/MyExercise/functions/read_garmin_csv_file.R")
+```
+
+## Find project data directory
+
+```{r}
+project_directory <-                  # Determine project location in 
+  here()                              # operating system file system.
+
+data_directory <-                     # Build file path to data directory.
+  file.path( project_directory,
+             "data")     
+```
+
+## Build an array of all activirty files in data directory
+
+```{r}
+files <-                              # Build an array to hold full project
+  find_all_garmin_csv_files(          # file paths.
+     data_directory )
+
+files <-                             # Ensure files in ascending order by 
+  sort( files )                      # by date.
+```
+  
+## Read first Garmin Activity file by date.
+
+```{r}
+History <-                           # Read first Garmin csv files and save it
+  read_garmin_csv_file( files[1])    # History.
+```
+
+## Find last_date in History.
+
+```{r}
+last_date_time <-                         # Determine last_date in History 
+  find_all_garmin_csv_file( History )     # tibble.
+```
+  
+# Read second Garmin activity file.
+
+```{r}
+Activities <-
+  History <-                           # Read first Garmin csv files and save it
+  read_garmin_csv_file( files[1])      # History.
+```
+
