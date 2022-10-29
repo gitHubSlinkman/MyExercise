@@ -49,10 +49,10 @@ files <-                             # Ensure files in ascending order by
 
 ```{r}
 History <-                            # Read first Garmin csv files and save 
-  read_garmin_csv_file( files[1]) %>% # History and ensuer that rows are in
-    arrange( date_time )              # chronological order
+  read_garmin_csv_file( files[1])     # History. and ensure that rows are in
+                                      # chronological order
 
-display_tibble( History )
+
 ```
 
 ## Read second activities file
