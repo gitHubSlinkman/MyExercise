@@ -1,5 +1,5 @@
 ---
-title: "Prototypr Study Prepare Garmin Data"
+title: "Prototype Study Prepare Garmin Data"
 author: "Craig W. Slinkman"
 date: "`r Sys.Date()`"
 output: html_document
@@ -20,6 +20,7 @@ require( flextable )
 source("D:/R-Projects/MyExercise/functions/find_all_garmin_csv_files.R")
 source("D:/R-Projects/MyExercise/functions/read_garmin_csv_file.R")
 source("D:/R-Projects/MyExercise/functions/find_last_history_date_time.R")
+source("D:/R-Projects/MyExercise/functions/display_tibble.R")
 ```
 
 ## Find project data directory
@@ -51,10 +52,26 @@ History <-                            # Read first Garmin csv files and save
   read_garmin_csv_file( files[1]) %>% # History and ensuer that rows are in
     arrange( date_time )              # chronological order
 
-History %>% 
-  select( activity_type:max_hr ) %>% 
-  flextable() %>% 
-    autofit()
+display_tibble( History )
 ```
 
+## Read second activities file
+
+```{r}
+Activities <-                         # Read first Garmin csv files and save 
+  read_garmin_csv_file( files[2]) %>% # History and ensuer that rows are in
+    arrange( date_time )              # chronological order
+
+display_tibble( Activities )
+```
+
+## Merge Activities tiblles with History
+
+```{r}
+
+History <- 
+  History %>% 
+    add_row( Activities )
+
+```
 

@@ -1,6 +1,7 @@
 # read_garmin_csv_file.R
 
 require(tidyverse)                          # I live in the file path.
+require(stringr)                            # For string manipulation
 
 ################################################################################
 # Define required functions.
@@ -57,6 +58,33 @@ read_garmin_csv_file <-
     Activities <-
       Activities %>% 
         filter( activity_type %in% my_activities )
-      
+    
+    
+    ############################################################################
+    # Add variable that records the date that the file was downloaded to each
+    # row in the tibble.
+    ############################################################################
+    
+    downloaded <-
+      str_sub( file_path, 
+              start = -14L, 
+              end = -1L )
+    
+    Activities <-
+      Activities %>% 
+        add_column( downloaded )
+    
+    ############################################################################
+    # Select only needed columns.
+    ############################################################################
+    
+    Activities <-
+      Activities %>% 
+      select( 
+        activity_type: max_hr,
+        avg_pace:min_temp,
+        best_lap_time:downloaded )
+    
     Activities
+      
   }

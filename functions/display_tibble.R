@@ -9,10 +9,9 @@ display_tibble <-
               title,
               distance,
               calories,
-              avg_hr,
-              max_hr,
-              total_ascent ) %>% 
+              downloaded ) %>% 
       flextable() %>% 
-        width( 2 = 2, 2.25 )
-  }
+        width( j = 2, 2.25 )  %>% 
+        width( j = 6, 2.25 )
+  } 
     
