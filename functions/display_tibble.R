@@ -11,7 +11,8 @@ display_tibble <-
               calories,
               downloaded ) %>% 
       flextable() %>% 
-        width( j = 2, 2.25 )  %>% 
+        width( j = 2, 2.25 )%>% 
+        width( j = 3, 2.50 ) %>% 
         width( j = 6, 2.25 )
   } 
     

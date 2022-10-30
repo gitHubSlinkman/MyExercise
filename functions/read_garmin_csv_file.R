@@ -28,29 +28,8 @@ read_garmin_csv_file <-
     ############################################################################
     
     Activities <-                          # Remove columns that not available
-      Activities %>%                       # in all Garmin data files.
-      select( 
-        activity_type,
-        date_time,
-        favorite,
-        title,
-        distance,
-        calories,
-        time,
-        avg_hr,
-        max_hr,
-        moving_time,
-        elapsed_time,
-        total_ascent,
-        total_descent,
-        min_elevation,
-        max_elevation,
-        avg_stride_length,
-        min_temp,
-        max_temp,
-        number_of_laps,
-        best_lap_time )
-       
+      Activities                          # in all Garmin data files.
+     
     
     ############################################################################
     # Make Cycling as my favorite activity and change "Cycling to "Triking."
@@ -97,13 +76,14 @@ read_garmin_csv_file <-
     # Select only needed columns.
     ############################################################################
     
-    Activities <-
-      Activities %>% 
+    Activities <-                           # Select only columns that I
+      Activities %>%                        # require.
       select( 
         activity_type: max_hr,
         min_temp,
         best_lap_time:downloaded )
     
-    Activities
+    Activities %>%                          # Ensure records are 
+      arrange( date_time )                  # chronological order.
       
   }

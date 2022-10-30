@@ -49,10 +49,9 @@ files <-                             # Ensure files in ascending order by
 
 ```{r}
 History <-                            # Read first Garmin csv files and save 
-  read_garmin_csv_file( files[1])     # History. and ensure that rows are in
-                                      # chronological order
+  read_garmin_csv_file( files[1])     # History. 
 
-
+display_tibble( History )
 ```
 
 ## Read second activities file
@@ -68,10 +67,53 @@ display_tibble( Activities )
 ## Merge Activities tiblles with History
 
 ```{r}
+last_history_date_time <-
+  find_last_history_date_time( History )
 
-History <- 
+
+Activities <-
+  Activities %>% 
+    filter( date_time > 
+              last_history_date_time )
+
+History <-
   History %>% 
-    add_row( Activities )
+  bind_rows( Activities )
 
+display_tibble( History )
+
+
+  
+
+
+```
+
+
+## Logic to construct the History tibble
+
+```{r}
+History <-                            # Read first Garmin csv files and save 
+  read_garmin_csv_file( files[1])     # History. 
+
+for( j in 2:length(files)){           # Loop through the remaing csv files.
+  
+  last_history_date_time <-           # Determine date of last chronological
+    find_last_history_date_time(      # entry.
+      History )
+  
+  Activities <-                       # Read csv file.
+     read_garmin_csv_file( files[j])
+  
+  Activities <-
+    Activities %>% 
+      filter( date_time > 
+              last_history_date_time )
+  
+  History <-
+    History %>% 
+      bind_rows( Activities )
+  
+  display_tibble( History )
+}
 ```
 
