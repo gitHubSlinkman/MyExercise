@@ -19,7 +19,7 @@ require( flextable )
 
 source("D:/R-Projects/MyExercise/functions/find_all_garmin_csv_files.R")
 source("D:/R-Projects/MyExercise/functions/read_garmin_csv_file.R")
-source("D:/R-Projects/MyExercise/functions/find_last_history_date_time.R")
+source("D:/R-Projects/MyExercise/functions/find_last_pooled_date_time.R")
 source("D:/R-Projects/MyExercise/functions/display_tibble.R")
 ```
 
@@ -48,10 +48,10 @@ files <-                             # Ensure files in ascending order by
 ## Read first Garmin Activity file by date.
 
 ```{r}
-History <-                            # Read first Garmin csv files and save 
+Pooled_Activities <-                  # Read first Garmin csv files and save 
   read_garmin_csv_file( files[1])     # History. 
 
-display_tibble( History )
+display_tibble( Pooled_Activities )   # Display tibble.
 ```
 
 ## Read second activities file
@@ -61,59 +61,59 @@ Activities <-                         # Read first Garmin csv files and save
   read_garmin_csv_file( files[2]) %>% # History and ensuer that rows are in
     arrange( date_time )              # chronological order
 
-display_tibble( Activities )
+display_tibble( Activities )          # Display tibble.  
 ```
 
 ## Merge Activities tiblles with History
 
 ```{r}
-last_history_date_time <-
-  find_last_history_date_time( History )
+last_pooled_date_time <-                    # Find the last activity date in the pooled
+  find_last_pooled_date_time(              # activities.
+    Pooled_Activities )
 
 
-Activities <-
-  Activities %>% 
+Activities <-                               # Remove duplicates in Activities
+  Activities %>%                            # tibble.
     filter( date_time > 
-              last_history_date_time )
+              last_pooled_date_time )
 
-History <-
-  History %>% 
-  bind_rows( Activities )
+Pooled_Activities <-                        # Concatenate the remaining 
+  Pooled_Activities %>%                     # Activities to the end of the
+  bind_rows( Activities )                   # Pooled_Activities.
 
-display_tibble( History )
-
-
-  
-
+display_tibble( Pooled_Activities )         # Verify tibble.
 
 ```
 
 
-## Logic to construct the History tibble
+## Logic to construct the Pooled_Activities tibble
 
 ```{r}
-History <-                            # Read first Garmin csv files and save 
-  read_garmin_csv_file( files[1])     # History. 
+Pool_Activities <-                    # Read first Garmin csv file into tibble.
+  read_garmin_csv_file( files[1])    
 
 for( j in 2:length(files)){           # Loop through the remaing csv files.
   
-  last_history_date_time <-           # Determine date of last chronological
-    find_last_history_date_time(      # entry.
-      History )
+  last_pooled_date_time <-           # Determine date of last chronological
+    find_last_pooled_date_time(      # entry.
+     Pooled )
   
   Activities <-                       # Read csv file.
      read_garmin_csv_file( files[j])
   
-  Activities <-
-    Activities %>% 
-      filter( date_time > 
-              last_history_date_time )
+  Activities <-                       # Keep only rows with date_time ilder than
+    Activities %>%                    # oldest date_time in the 
+      filter( date_time >             # Pooled_Activities.
+              last_pooled_date_time )
   
-  History <-
-    History %>% 
+ Pooled_Activities <-                 # Concatenate Activities to the end of
+   Pooled_Activities %>%              # Pooled_Activities.
       bind_rows( Activities )
-  
-  display_tibble( History )
 }
+
+dim( Pooled_Activities )
+
+display_tibble(                             # Display tibble.
+  Pooled_Activities)
 ```
 
