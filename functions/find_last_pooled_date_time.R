@@ -1,10 +1,13 @@
-# find_last_history_date_time.R
+# find_latest_pooled_date_time.R
 
-require(tidyverse)                          # I live in the tidyverse
+require( tidyverse )                        # I live in the tidyverse.
+require( lubridate )                        # For date manipulation.
 
 find_last_pooled_date_time <-
-  function( Pooled_Actvities  )
-  { 
-   max( Pooled_Activities %>%               # Pull the date_time from History
-           pull( date_time ))               # and find maximum(last ) date_time.
+  function( Pooled_Activities ){
+    date_times <-  
+      Pooled_Activities %>% 
+        pull( date_time )
+    
+    max( date_times )
   }

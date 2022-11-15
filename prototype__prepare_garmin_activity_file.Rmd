@@ -34,7 +34,7 @@ data_directory <-                     # Build file path to data directory.
              "data")     
 ```
 
-## Build an array of all activirty files in data directory
+## Build an array of all activity files in data directory
 
 ```{r}
 files <-                              # Build an array to hold full project
@@ -67,7 +67,9 @@ display_tibble( Activities )          # Display tibble.
 ## Merge Activities tiblles with History
 
 ```{r}
-last_pooled_date_time <-                    # Find the last activity date in the pooled
+
+
+last_pooled_date_time <-                   # Find the last activity date in the pooled
   find_last_pooled_date_time(              # activities.
     Pooled_Activities )
 
@@ -85,18 +87,22 @@ display_tibble( Pooled_Activities )         # Verify tibble.
 
 ```
 
+## Reset memory
+
+
+
 
 ## Logic to construct the Pooled_Activities tibble
 
 ```{r}
-Pool_Activities <-                    # Read first Garmin csv file into tibble.
+Pooled_Activities <-                    # Read first Garmin csv file into tibble.
   read_garmin_csv_file( files[1])    
 
-for( j in 2:length(files)){           # Loop through the remaing csv files.
+for( j in 2:length(files)){           # Loop through the remaining csv files.
   
   last_pooled_date_time <-           # Determine date of last chronological
     find_last_pooled_date_time(      # entry.
-     Pooled )
+     Pooled_Activities )
   
   Activities <-                       # Read csv file.
      read_garmin_csv_file( files[j])
@@ -113,7 +119,7 @@ for( j in 2:length(files)){           # Loop through the remaing csv files.
 
 dim( Pooled_Activities )
 
-display_tibble(                             # Display tibble.
+display_tibble(                       # Display tibble.
   Pooled_Activities)
 ```
 

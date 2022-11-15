@@ -10,7 +10,8 @@ source("D:/R-Projects/MyExercise/functions/read_garmin_csv_file.R")
 source("D:/R-Projects/MyExercise/functions/find_last_pooled_date_time.R")
 
 prepare_garmin_data <-
-  function(){
+  function()
+    {
     project_directory <-                  # Determine project location in 
       here()                              # operating system file system.
     
@@ -28,13 +29,13 @@ prepare_garmin_data <-
     
     
     Pooled_Activities <-                  # Read first Garmin csv files and save 
-      read_garmin_csv_file( files[1])     # into tibble.
+      read_garmin_csv_file( files[1] )    # into tibble.
     
     for( j in 2:length(files)){           # Loop through the remaining files.
       
-      last_history_date_time <-           # Determine date of last chronological
-        find_last_history_date_time(      # entry.
-          History )
+      last_pooled_date_time <-           # Determine date of last chronological
+        find_last_pooled_date_time(      # entry.
+          Pooled_Activities )
       
       Activities <-                       # Read csv file.
         read_garmin_csv_file( files[j])
@@ -42,11 +43,13 @@ prepare_garmin_data <-
       Activities <-                       # Remove duplicate rows.
         Activities %>% 
         filter( date_time > 
-                last_history_date_time )
+                last_pooled_date_time )
       
-      Pooled_Activities <-                          # Bind Rows
+      Pooled_Activities <-                # Bind rows to end of activities.
         Pooled_Activities %>% 
         bind_rows( Activities )           
     }
+    
+    Pooled_Activities     
     
   }
